@@ -1,0 +1,2 @@
+class PactsController < ApplicationController
+end
