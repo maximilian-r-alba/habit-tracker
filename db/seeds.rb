@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+User.create!(username:"test", password: "abcd1234", name:"Fig")
+Resolution.create!(goal_statement: "Read More Books", category: "Mental")
+Pact.create!(specific?:true, goal_int: 3, resolution_id: Resolution.all.sample.id, user_id: User.all.sample.id )

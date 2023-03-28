@@ -1,5 +1,7 @@
 class ResolutionsController < ApplicationController
 
+    skip_before_action :authorize, only: :index
+
     def create
         resolution = Resolution.create!(resolution_params)
         render json: resolution, status: :created
