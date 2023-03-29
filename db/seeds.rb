@@ -8,4 +8,4 @@
 
 User.create!(username:"test", password: "abcd1234", name:"Fig")
 Resolution.create!(goal_statement: "Read More Books", category: "Mental")
-Pact.create!(specific?:true, goal_int: 3, resolution_id: Resolution.all.sample.id, user_id: User.all.sample.id )
+Pact.create!(specific?:true, goal_int: 3, resolution_id: Resolution.all.sample.id, user_id: User.all.sample.id, frequency_scope: "Monthly" )
