@@ -6,10 +6,14 @@ import { UserContext } from './UserContext';
 import { useState , useEffect } from 'react';
 
 import Login from './Login';
+import Signup from './Signup';
 import Dashboard from './Dashboard'
+import NavBar from './NavBar';
+import ResolutionsPage from './ResolutionsPage';
 function App() {
   // fetch("/resolutions").then(res => res.json()).then(data => console.log(data))
   const [user, setUser] = useState()
+  const [resolutions, setResolutions] = useState()
 
   useEffect(() => {
     fetch("/me").then(r => {
@@ -19,24 +23,23 @@ function App() {
     })
   }, [])
 
-  function handleLogout(e){
-    fetch("/logout", {
-      method: "DELETE"
-    }).then(r => {
-      console.log(r.ok)
-    })
-  }
+  useEffect(() => {
+    fetch("/resolutions").then(r => r.json()).then(data => setResolutions(data))
+  }, [])
+  
+  console.log(user)
   return (
     <UserContext.Provider value = {user}>
-      <button onClick={handleLogout}> Logout </button>
-  
+    
+        <NavBar setUser = {setUser}></NavBar>
         <Routes>
-          <Route path = "/" element={<h1>Hello</h1>}></Route>
+          <Route path = "/" element={ user ? <h1>{`Hello ${user.name}`}</h1> : <h1>Hello</h1>}> </Route>
           <Route path = "/login" element={<Login setUser = {setUser} />}></Route>
           <Route path = "/dashboard" element = {<Dashboard/>}></Route>
+          <Route path = "/signup" element = {<Signup/>}></Route>
+          <Route path = "/resolutions" element = {<ResolutionsPage resolutions={resolutions} />}></Route>
         </Routes>
    
-
     </UserContext.Provider>
     
   );

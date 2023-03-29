@@ -1,8 +1,9 @@
 import { useState } from "react"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 function Login({setUser}) { 
 
     const [loginParameters, setLoginParameters] = useState({username:"" , password:""})
+    const [errors, setErrors] = useState(null)
 
     const navigate = useNavigate()
 
@@ -21,16 +22,17 @@ function Login({setUser}) {
         }).then(res => {
         if(res.ok){
             res.json().then((user) => setUser(user))
+            navigate('/')
         }
         else{
-            res.json().then(errorData => console.log(errorData.error))
+            res.json().then(errorData => setErrors(errorData.error))
         }
-        navigate('/')
+       
     })
     }
     return (
     <div>
-
+        {errors ? <h1>{errors}</h1> : <></>}
          <form onSubmit={handleSubmit} >
           <label>
             Username:
