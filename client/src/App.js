@@ -13,8 +13,10 @@ import ResolutionsPage from './ResolutionsPage';
 function App() {
   // fetch("/resolutions").then(res => res.json()).then(data => console.log(data))
   const [user, setUser] = useState()
-  const [resolutions, setResolutions] = useState()
-
+  const [resolutions, setResolutions] = useState([])
+  function handleResolutions (newResolution){
+    setResolutions([newResolution, ...resolutions ])
+  }
   useEffect(() => {
     fetch("/me").then(r => {
       if(r.ok){
@@ -27,7 +29,7 @@ function App() {
     fetch("/resolutions").then(r => r.json()).then(data => setResolutions(data))
   }, [])
   
-  console.log(user)
+  
   return (
     <UserContext.Provider value = {user}>
     
@@ -37,7 +39,7 @@ function App() {
           <Route path = "/login" element={<Login setUser = {setUser} />}></Route>
           <Route path = "/dashboard" element = {<Dashboard/>}></Route>
           <Route path = "/signup" element = {<Signup/>}></Route>
-          <Route path = "/resolutions" element = {<ResolutionsPage resolutions={resolutions} />}></Route>
+          <Route path = "/resolutions" element = {<ResolutionsPage resolutions={resolutions} handleResolutions = {handleResolutions} />}></Route>
         </Routes>
    
     </UserContext.Provider>
