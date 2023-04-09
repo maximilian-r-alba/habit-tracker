@@ -1,50 +1,169 @@
-import logo from './logo.svg';
 import './App.css';
+
 import { Routes , Route } from "react-router-dom"
 
 import { UserContext } from './UserContext';
 import { useState , useEffect } from 'react';
 
-import Login from './Login';
-import Signup from './Signup';
-import Dashboard from './Dashboard'
-import NavBar from './NavBar';
-import ResolutionsPage from './ResolutionsPage';
+
+import LandingPage from './GeneralComponents/LandingPage';
+import Login from './GeneralComponents/Login';
+import UserForm from './Users/UserForm';
+import Dashboard from './Users/Dashboard'
+import NavBar from './GeneralComponents/NavBar';
+import ResolutionsPage from './Resolutions/ResolutionsPage';
+import BrowseUsers from './Users/BrowseUsers';
+import UserPage from './Users/UserPage';
+
 function App() {
-  // fetch("/resolutions").then(res => res.json()).then(data => console.log(data))
+  
+  // console.log('app rendered')
   const [user, setUser] = useState()
+  const [users, setUsers] = useState()
   const [resolutions, setResolutions] = useState([])
-  function handleResolutions (newResolution){
-    setResolutions([newResolution, ...resolutions ])
-  }
+
+  useEffect(() => {
+    fetch("/resolutions").then(r => r.json()).then(setResolutions)
+    fetch("/users").then(r=> r.json()).then(setUsers)
+  }, [])
+
   useEffect(() => {
     fetch("/me").then(r => {
       if(r.ok){
-        r.json().then((user) => setUser(user))
+        r.json().then(setUser)
       }
     })
   }, [])
 
-  useEffect(() => {
-    fetch("/resolutions").then(r => r.json()).then(data => setResolutions(data))
-  }, [])
+  function handleResolutions (newResolution){
+    setResolutions([newResolution, ...resolutions ])
+  }
+
+  function handleUserChange (userObj){
+    const filteredUsers = users.filter((u) => u.id !== userObj.id)
+    if (userObj.name){
+      return setUsers([userObj, ...filteredUsers])
+    }
+    return setUsers([...filteredUsers])
+  }
+ 
+  function handleUsersonNewPact(newPact, method){
   
-  
-  return (
-    <UserContext.Provider value = {user}>
+    const userPacts = user.pacts.filter((pact) => pact.id != newPact.id)
+
+    const resolutionsFromPacts = userPacts.map((p)=> p.resolution)
+
+    const uneditedUsers = users.filter((u) => u.id !== newPact.user_id)  
+
+    if (method !== "DELETE"){
+      userPacts.unshift(newPact)
+      resolutionsFromPacts.unshift(newPact.resolution)
+    }
     
-        <NavBar setUser = {setUser}></NavBar>
-        <Routes>
-          <Route path = "/" element={ user ? <h1>{`Hello ${user.name}`}</h1> : <h1>Hello</h1>}> </Route>
-          <Route path = "/login" element={<Login setUser = {setUser} />}></Route>
-          <Route path = "/dashboard" element = {<Dashboard/>}></Route>
-          <Route path = "/signup" element = {<Signup/>}></Route>
-          <Route path = "/resolutions" element = {<ResolutionsPage resolutions={resolutions} handleResolutions = {handleResolutions} />}></Route>
-        </Routes>
+    const userResolutions = Array.from(new Set(resolutionsFromPacts.map(r => r.id))).map(id => {
+      return resolutionsFromPacts.find( r=> r.id === id) 
+    })
    
-    </UserContext.Provider>
+    setUser({...user, 'pacts':userPacts, 'resolutions':userResolutions})
+    
+    setUsers([{...user, 'pacts':userPacts, 'resolutions':userResolutions}, ...uneditedUsers ])
+
+    const editedResolution = resolutions.filter(res => res.id == newPact.resolution.id).pop()
+
+    const uneditedResolutions = resolutions.filter(res=> res.id !== newPact.resolution.id)
+
+    const userList = editedResolution.unique_users.filter( u => u.id !== user.id)
+
+    const userResolutionsIDs = userResolutions.map((r) => r.id)
+
+    if(method !== "DELETE" || userResolutionsIDs.includes(editedResolution.id)){
+      userList.push({id: user.id, name: user.name})
+    }
+
+    const newResolutionsObj = [{...editedResolution, 'unique_users':userList} , ...uneditedResolutions]
+    
+    setResolutions(newResolutionsObj)
+      //check if user has any other pacts with same resolution
+      // resolutionsFromPacts = user.pacts.map((p) p.resolution)
+      // resolution.id == editedResolution.id
+      //if it doesn't 
+    
+
+  }
+
+  function handleResolutionsonNewPact(newPact, method){
+    
+    const editedResolution = resolutions.filter(res => res.id == newPact.resolution.id).pop()
+
+    const uneditedResolutions = resolutions.filter(res=> res.id !== newPact.resolution.id)
+
+    // const userList = editedResolution.unique_users.filter( u => u.id !== user.id)
+    const userList = editedResolution.unique_users.filter( u => u.id !== user.id)
+    if(method !== "DELETE"){
+      userList.push({id: user.id, name: user.name})
+    }
+    if(method === "DELETE"){
+      //check if user has any other pacts with same resolution
+      // resolutionsFromPacts = user.pacts.map((p) p.resolution)
+      // resolution.id == editedResolution.id
+      //if it doesn't 
+    }
+    
+    // const uniqueUsers = Array.from(new Set(userList.map(u=>u.id))).map( id => {
+    //   return userList.find( u => u.id === id)
+    // })
+    // const uniqueUsers = editedResolution.unique_users.filter((u) => u.id !== user.id)
+   
+   
+   
+    const newResolutionsObj = [{...editedResolution, 'unique_users':userList} , ...uneditedResolutions]
+    
+    setResolutions(newResolutionsObj)
+  }
+
+
+  
+  function handlePacts(newPact , method){
+
+    console.log('user is ', user)
+    // handleResolutionsonNewPact(newPact, method)
+    handleUsersonNewPact(newPact, method)
+   
+  }
+
+  return (
+    <>
+    
+   <UserContext.Provider value = {user}>
+   
+       <NavBar setUser = {setUser}></NavBar>
+       <Routes>
+         <Route path = "/" element = {<LandingPage setUser={setUser}/>}> </Route>
+         <Route path = "/login" element={<Login setUser = {setUser} />}></Route>
+         <Route path = "/dashboard" element = {<Dashboard handlePacts={handlePacts}/>}></Route>
+         <Route path = "/users" element = {<BrowseUsers users={users}/>} />
+         <Route path = "/users/:id" element = {<UserPage users={users} setUsers={setUsers} handlePacts={handlePacts} setUser={setUser}/>}/>
+         <Route path = "/users/:id/edit" element = {<UserForm user={user} setUser={setUser} handleUserChange={handleUserChange}/>}/>
+         <Route path = "/signup" element = {<UserForm handleUserChange={handleUserChange}/>}></Route>
+         <Route path = "/resolutions" element = {<ResolutionsPage resolutions={resolutions} handleResolutions = {handleResolutions} handlePacts={handlePacts}/>}></Route>
+       </Routes>
+  
+   </UserContext.Provider>
+  
+    </>
+   
     
   );
 }
 
 export default App;
+
+// const OverlayDiv = styled.div`
+
+// display: ${props => props.active? 'none' : ''};
+// `
+
+// const PortalSite = styled.div`
+//   display: ${props => props.active? '': 'none'};
+//   background: red;
+// `
