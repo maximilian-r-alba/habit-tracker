@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_27_222900) do
+ActiveRecord::Schema.define(version: 2023_03_30_234921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "pacts", force: :cascade do |t|
-    t.date "completion_date"
-    t.boolean "specific?"
+    t.string "completion_date"
+    t.boolean "isSpecific"
     t.integer "goal_int"
     t.string "frequency_scope"
     t.bigint "resolution_id", null: false
@@ -26,6 +26,16 @@ ActiveRecord::Schema.define(version: 2023_03_27_222900) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["resolution_id"], name: "index_pacts_on_resolution_id"
     t.index ["user_id"], name: "index_pacts_on_user_id"
+  end
+
+  create_table "progress_dates", force: :cascade do |t|
+    t.bigint "pact_id", null: false
+    t.bigint "resolution_id", null: false
+    t.string "progressDate"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["pact_id"], name: "index_progress_dates_on_pact_id"
+    t.index ["resolution_id"], name: "index_progress_dates_on_resolution_id"
   end
 
   create_table "resolutions", force: :cascade do |t|
@@ -47,4 +57,6 @@ ActiveRecord::Schema.define(version: 2023_03_27_222900) do
 
   add_foreign_key "pacts", "resolutions"
   add_foreign_key "pacts", "users"
+  add_foreign_key "progress_dates", "pacts"
+  add_foreign_key "progress_dates", "resolutions"
 end

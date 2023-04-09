@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
   
   resources :pacts
-  resources :resolutions
+  resources :resolutions, only: [:create, :index]
   resources :users
+  resources :progress_dates, only: [:create]
 
   get "/me", to:"users#show"
   post "/login", to:"sessions#create"
