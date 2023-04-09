@@ -1,18 +1,19 @@
 class UsersController < ApplicationController
-    skip_before_action :authorize, only: :create
+    skip_before_action :authorize, only: [:create, :index]
     def create
         user = User.create!(user_params)
         render json: user, status: :created
     end
 
     def index
-        render json:User.all
+        users = User.all
+        render json:users, include: ['pacts', 'pacts.resolution', 'pacts.progress_dates', 'resolutions']
     end
 
     def show
         user = User.find_by(id:session[:user_id])
         if user
-        render json: user, include: ['pacts', 'pacts.resolution']
+        render json: user, include: ['pacts', 'pacts.resolution', 'pacts.progress_dates', 'resolutions']
         else
             render json: {error: "Not authorized"}, status: :unauthorized
         end
@@ -20,10 +21,10 @@ class UsersController < ApplicationController
 
     def update
         user = User.find_by(id:params[:id])
-        byebug
+        
         if user
-            user.update(user_params)
-            render json:user
+            user.update!(user_params)
+            render json:user, include: ['pacts', 'pacts.resolution', 'pacts.progress_dates', 'resolutions']
         else
             render json: {error: "User not found"}, status: :not_found
         end
@@ -38,6 +39,6 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:username, :password, :name, :bio, :image_url)
+        params.permit(:username, :password, :name, :bio, :image_url, :password_confirmation)
     end
 end
