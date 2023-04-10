@@ -9,7 +9,6 @@ import styled from "styled-components"
 
 function Dashboard({handlePacts}){
 
-    console.log('dashboard rendered')
     const user = useContext(UserContext)
     const navigate = useNavigate()
     const [toggleDailies, setToggleDailies] = useState(true)
@@ -92,7 +91,7 @@ grid-template-areas:
 column-gap: 15px;
 row-gap: 10px;
 .empty{
-
+    height: 5vh;
     cursor: pointer;
 }
 
