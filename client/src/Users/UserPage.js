@@ -9,9 +9,7 @@ import ResolutionCard from "../Resolutions/ResolutionCard"
 import {AiOutlineEdit , AiOutlineUserDelete} from "react-icons/ai"
 
 function UserPage({users , setUsers , handlePacts , setUser}){
-//   edit to make page re render on pact edit and delete, need to manage state better. do not use props to set initial value, need to rely on setting state such that component will re render ex: pact card changes progress bc fetch is setting state which causes it to re render, when editing the pact itself through the pact form, the form is only making the ftech and the call to App.js, what if pass obj from form to user page and update state of pacts from that.
 
-// console.log('user page rendered')
     const {id} = useParams()
     const navigate = useNavigate()
     const currentUser = useContext(UserContext)
@@ -51,17 +49,16 @@ function UserPage({users , setUsers , handlePacts , setUser}){
         }).then(() =>{
             const filterDeleted = users.filter((u) => u.id != currentUser.id)
             setUsers(filterDeleted)
-            setUser()
-        })
-        navigate('/')
-    }
+            
+        }).then(fetch("/logout", {
+            method: "DELETE"}).then(() => {
+                navigate('/') 
+                setUser(false)
+              }))
 
-    // function handleDeletePact(pactInstance){
-    //     const filteredPacts = currentUser.pacts.filter((p) => p.id !== pactInstance.id)
-    //     const filterResolutions = currentUser.resolutions.filter((r) => r.id !== pactInstance.resolution.id)
-    //     const filterUsers = users.filter((u) => u.id !== currentUser.id)
-    //     setUsers([{...currentUser , 'pacts': filteredPacts, 'resolutions': filterResolutions} , ...filterUsers ])
-    // }
+        navigate('/')
+        
+    }
 
     return <PageContainer>
         
