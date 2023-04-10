@@ -1,7 +1,7 @@
 
 import {BiCheckbox , BiCheckboxChecked} from "react-icons/bi"
 function ProgressSquare({day, progressDates, weekEnd}){
-    // console.log('progress square rendered')
+
     const boxDate = day.toLocaleDateString('en-US')
     const dayOfWeek = day.toString().slice(0,3)
     const weekStart = new Date(new Date( new Date(day.valueOf()).setDate(day.getDate() - day.getDay())).setHours(0,0,0,0))

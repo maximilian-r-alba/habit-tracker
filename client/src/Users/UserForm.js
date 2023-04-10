@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styled  from 'styled-components';
 
 function UserForm ({user , setUser, handleUserChange}){
-  console.log('user form rendered')
+
     const [newUserParams, setNewUserParams] = useState({username:"" , password: "", password_confirmation: "", name: "", bio: "", image_url: ""})
     const [errorData, setErrorData] = useState()
     const navigate = useNavigate()
@@ -20,6 +20,7 @@ function UserForm ({user , setUser, handleUserChange}){
 
     function handleSubmit(e){
         e.preventDefault()
+        
         if(user){
           fetch(`/users/${user.id}`, {
             method: "PATCH",

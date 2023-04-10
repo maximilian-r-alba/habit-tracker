@@ -2,7 +2,6 @@ import { useState } from "react"
 import styled from "styled-components"
 
 function ResolutionForm({handleResolutions , handleShowForm}){
-    console.log('resolution form rendered')
 
     const [resolutionParams, setResolutionParams] = useState({goal_statement: "", category: "Physical"})
 

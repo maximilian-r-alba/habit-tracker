@@ -9,7 +9,6 @@ import ResolutionForm from "./ResolutionForm"
 import PactForm from "../Pacts/PactForm"
 
 function ResolutionsPage ({resolutions , handleResolutions , handlePacts}){
-    console.log('resolution page rendered')
   
     const user = useContext(UserContext)
     const [resolutionView, setResolutionView] = useState(false)

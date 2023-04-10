@@ -4,9 +4,6 @@ import {AiOutlineClose} from "react-icons/ai"
 import styled from "styled-components"
 
 function PactForm({resolution , handlePacts, setShowPactForm , pact}){
-
-    // console.log('pact form rendered')
-    
    
     const [pactParams, setPactParams] = useState({frequency_scope: undefined, goal_int: 1, isSpecific: true,resolution_id: resolution.id})
     const [errorData, setErrorData] = useState()

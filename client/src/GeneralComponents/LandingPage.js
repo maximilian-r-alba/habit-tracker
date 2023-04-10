@@ -4,7 +4,7 @@ import { UserContext } from "../UserContext"
 import { useContext } from "react"
 
 function LandingPage(){
-    console.log('landing page rendered')
+   
     const user = useContext(UserContext)
     
     return <StyledLanding>

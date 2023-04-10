@@ -12,7 +12,7 @@ import {TiDocumentDelete} from "react-icons/ti"
 
 function PactCard({pact , handlePacts , handlePactForm , deletePact}){
 
-    // console.log('pact card rendered')    
+
     const currentUser = useContext(UserContext)
     
     const [pactInstance, setPactInstance] = useState(pact)

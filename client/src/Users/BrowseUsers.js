@@ -1,7 +1,7 @@
 import UserCard from "./UserCard"
 import styled from "styled-components"
 function BrowseUsers({users}){
-    // console.log('browse users rendered')
+  
     const cards = users.map((user) => <UserCard key={user.id} user={user}/>)
 
     return <UserContainer>

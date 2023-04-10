@@ -2,7 +2,6 @@
 import styled from "styled-components"
 import { useNavigate } from "react-router-dom"
 function UserCard({user}){
-    // console.log('user card rendered')
     const navigate = useNavigate()
 
     function handleNavigate(){

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 
 import styled from "styled-components"
 function Login({setUser}) { 
-    console.log('login rendered')
+   
     const [loginParameters, setLoginParameters] = useState({username:"" , password:""})
     const [errors, setErrors] = useState(null)
 
