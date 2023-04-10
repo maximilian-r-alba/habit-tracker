@@ -124,7 +124,7 @@ const PactResolutionContainer = styled.div`
 display: flex;
 width: 100vw;
 justify-content: center;
-gap: 10vw;
+gap: 5vw;
 
 `
 
