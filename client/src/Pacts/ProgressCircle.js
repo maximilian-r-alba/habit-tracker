@@ -1,6 +1,4 @@
 
-import styled from "styled-components";
-
 const cleanPercentage = (percentage) => {
   const isNegativeOrNaN = !Number.isFinite(+percentage) || percentage < 0; // we can set non-numbers to 0 here
   const isTooHigh = percentage > 100;
