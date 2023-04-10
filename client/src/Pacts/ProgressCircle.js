@@ -1,6 +1,6 @@
-
+//component created by: https://dev.to/jackherizsmith/making-a-progress-circle-in-react-3o65
 const cleanPercentage = (percentage) => {
-  const isNegativeOrNaN = !Number.isFinite(+percentage) || percentage < 0; // we can set non-numbers to 0 here
+  const isNegativeOrNaN = !Number.isFinite(+percentage) || percentage < 0;
   const isTooHigh = percentage > 100;
   return isNegativeOrNaN ? 0 : isTooHigh ? 100 : +percentage;
 };
@@ -8,14 +8,14 @@ const cleanPercentage = (percentage) => {
 const Circle = ({ color, percentage }) => {
   const r = 40;
   const circ = 2 * Math.PI * r;
-  const strokePct = ((100 - percentage) * circ) / 100; // where stroke will start, e.g. from 15% to 100%.
+  const strokePct = ((100 - percentage) * circ) / 100; 
   return (
     <circle
       r={r}
       cx={100}
       cy={100}
       fill="transparent"
-      stroke={strokePct !== circ ? color : ""} // remove colour as 0% sets full circumference
+      stroke={strokePct !== circ ? color : ""} 
       strokeWidth={"1rem"}
       strokeDasharray={circ}
       strokeDashoffset={percentage ? strokePct : 0}
@@ -38,7 +38,7 @@ const Text = ({ percentage }) => {
 };
 
 function ProgressCircle ({ percentage, color }) {
-  // console.log('progress circle rendered')
+
   const pct = cleanPercentage(percentage);
   return (
     <svg className="progressCircle" width={200} height={200}>
