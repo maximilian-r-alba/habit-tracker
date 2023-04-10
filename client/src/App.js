@@ -46,9 +46,9 @@ function App() {
     }
     return setUsers([...filteredUsers])
   }
- 
-  function handleUsersonNewPact(newPact, method){
-  
+   
+  function handlePacts(newPact , method){
+
     const userPacts = user.pacts.filter((pact) => pact.id != newPact.id)
 
     const resolutionsFromPacts = userPacts.map((p)=> p.resolution)
@@ -83,51 +83,6 @@ function App() {
     const newResolutionsObj = [{...editedResolution, 'unique_users':userList} , ...uneditedResolutions]
     
     setResolutions(newResolutionsObj)
-      //check if user has any other pacts with same resolution
-      // resolutionsFromPacts = user.pacts.map((p) p.resolution)
-      // resolution.id == editedResolution.id
-      //if it doesn't 
-    
-
-  }
-
-  function handleResolutionsonNewPact(newPact, method){
-    
-    const editedResolution = resolutions.filter(res => res.id == newPact.resolution.id).pop()
-
-    const uneditedResolutions = resolutions.filter(res=> res.id !== newPact.resolution.id)
-
-    // const userList = editedResolution.unique_users.filter( u => u.id !== user.id)
-    const userList = editedResolution.unique_users.filter( u => u.id !== user.id)
-    if(method !== "DELETE"){
-      userList.push({id: user.id, name: user.name})
-    }
-    if(method === "DELETE"){
-      //check if user has any other pacts with same resolution
-      // resolutionsFromPacts = user.pacts.map((p) p.resolution)
-      // resolution.id == editedResolution.id
-      //if it doesn't 
-    }
-    
-    // const uniqueUsers = Array.from(new Set(userList.map(u=>u.id))).map( id => {
-    //   return userList.find( u => u.id === id)
-    // })
-    // const uniqueUsers = editedResolution.unique_users.filter((u) => u.id !== user.id)
-   
-   
-   
-    const newResolutionsObj = [{...editedResolution, 'unique_users':userList} , ...uneditedResolutions]
-    
-    setResolutions(newResolutionsObj)
-  }
-
-
-  
-  function handlePacts(newPact , method){
-
-    console.log('user is ', user)
-    // handleResolutionsonNewPact(newPact, method)
-    handleUsersonNewPact(newPact, method)
    
   }
 
