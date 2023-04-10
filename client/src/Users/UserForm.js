@@ -61,34 +61,34 @@ function UserForm ({user , setUser, handleUserChange}){
 
         <FormContainer>
             <StyledForm onSubmit={handleSubmit} >
-              <label for="username">
+              <label htmlFor="username">
                 Username:
               </label>
 
               <input type="text" id="username" value = {newUserParams['username']} onChange={handleChange} ></input>
               
-              <label for="password">
+              <label htmlFor="password">
                 Password:
               </label>
               <input type="password" id="password" value = {newUserParams['password']} onChange={handleChange} ></input>
 
-              <label for="password_confirmation">
+              <label htmlFor="password_confirmation">
                 Confirm Password:
               </label>
               <input type="password" id="password_confirmation" value = {newUserParams['password_confirmation']} onChange={handleChange} ></input>
 
-              <label for="name">
+              <label htmlFor="name">
                 Name:
               </label>
 
               <input type="text" id="name" value = {newUserParams['name']} onChange={handleChange} ></input>
 
-              <label for = "bio">
+              <label htmlFor = "bio">
                 Bio:
               </label>
                 <textarea id="bio" value = {newUserParams['bio']} onChange={handleChange} ></textarea>
 
-              <label for = "image_url">
+              <label htmlFor = "image_url">
                 Image:
               </label>
               <input type="text" id="image_url"  value = {newUserParams['image_url']} onChange={handleChange} ></input>
