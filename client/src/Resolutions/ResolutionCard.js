@@ -5,14 +5,15 @@ import { useEffect, useState } from "react";
 
 function ResolutionCard ({resolution , handlePactForm , pactView}){
 
-    // console.log('resolution card rendered')
+    console.log('resolution card rendered')
     const [userAmount, setUserAmount] = useState()
 
     useEffect(() =>
-    {if (resolution.unique_users){
-        // console.log('resolution unique users')
+    {
+        if (resolution.unique_users){
         setUserAmount(resolution.unique_users.length)
-    }}
+        }
+    }
     ,[resolution])
 
 
@@ -40,6 +41,9 @@ border-radius: 25px;
 margin: 10px;
 word-wrap: break-word;
 position: relative;
+h1{
+    font-size: 1.5em;
+}
 
 span{
     border: solid;
@@ -51,7 +55,7 @@ span{
     margin: 0;
     padding-left: 10px;
     padding-right: 10px;
-    font-size: 120%;
+    font-size: 100%;
 }
 }
 
