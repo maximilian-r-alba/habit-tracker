@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react"
-import { UserContext } from "../UserContext"
+import { useEffect, useState } from "react"
 
 import {AiOutlineClose} from "react-icons/ai"
 import styled from "styled-components"
@@ -7,7 +6,7 @@ import styled from "styled-components"
 function PactForm({resolution , handlePacts, setShowPactForm , pact}){
 
     // console.log('pact form rendered')
-    const user = useContext(UserContext)
+    
    
     const [pactParams, setPactParams] = useState({frequency_scope: undefined, goal_int: 1, isSpecific: true,resolution_id: resolution.id})
     const [errorData, setErrorData] = useState()
@@ -17,7 +16,7 @@ function PactForm({resolution , handlePacts, setShowPactForm , pact}){
             console.log('pact was preset')
             setPactParams({frequency_scope: pact.frequency_scope, goal_int: pact.goal_int, isSpecific: pact.isSpecific, resolution_id: pact.resolution.id})
         }
-    }, [])
+    }, [pact])
 
     
     function handleSubmit(e){
@@ -68,7 +67,7 @@ function PactForm({resolution , handlePacts, setShowPactForm , pact}){
 
             case 'isSpecific':
                 if(value==='true'){
-                    setPactParams({...pactParams, [key]: true, ['frequency_scope'] : false})
+                    setPactParams({...pactParams, [key]: true, 'frequency_scope' : false})
                 }
                 else{
                     setPactParams({...pactParams, [key]: false})
