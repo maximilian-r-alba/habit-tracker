@@ -11,18 +11,14 @@ function Dashboard({handlePacts}){
 
     console.log('dashboard rendered')
     const user = useContext(UserContext)
+    const navigate = useNavigate()
+    const [toggleDailies, setToggleDailies] = useState(true)
 
     const pacts = user.pacts.sort(sortPactsbyID)
-    const navigate = useNavigate()
-    const archived = pacts.filter((pact) => pact.completion_date !== null)
-
-    const monthlies = pacts.filter((pact) => pact.frequency_scope == 'Monthly').map((pact) => <PactCard key={pact.id} pact = {pact} handlePacts={handlePacts}/>)
-
-    const weeklies = pacts.filter((pact) => pact.frequency_scope == 'Weekly').map((pact) => <PactCard key={pact.id} pact = {pact} handlePacts={handlePacts}/>)
-    
-
-    const dailies = pacts.filter((pact) => pact.frequency_scope == 'Daily').map((pact) => <PactCard key={pact.id} pact = {pact} handlePacts={handlePacts}/>)
-    const milestones = pacts.filter((pact) => pact.isSpecific == true ).map((pact) => <PactCard key={pact.id} pact = {pact} handlePacts={handlePacts}/>)
+    const monthlies = pacts.filter((pact) => pact.frequency_scope === 'Monthly').map((pact) => <PactCard key={pact.id} pact = {pact} handlePacts={handlePacts}/>)
+    const weeklies = pacts.filter((pact) => pact.frequency_scope === 'Weekly').map((pact) => <PactCard key={pact.id} pact = {pact} handlePacts={handlePacts}/>)
+    const dailies = pacts.filter((pact) => pact.frequency_scope === 'Daily').map((pact) => <PactCard key={pact.id} pact = {pact} handlePacts={handlePacts}/>)
+    const milestones = pacts.filter((pact) => pact.isSpecific === true ).map((pact) => <PactCard key={pact.id} pact = {pact} handlePacts={handlePacts}/>)
 
     function sortPactsbyID (a,b){
         let x = a.id
@@ -37,13 +33,10 @@ function Dashboard({handlePacts}){
     }
 
     const today = new Date(new Date().setHours(23,59,59,59))
-    // const year = today.getFullYear()
-    // const month = today.getMonth()
     const weekStart = new Date( new Date(today.valueOf()).setDate(today.getDate() - today.getDay() ))
     const weekEnd = new Date( new Date(today.valueOf()).setDate(today.getDate() - today.getDay()+6))
 
-    const [toggleDailies, setToggleDailies] = useState(true)
- 
+   
     return( 
         <DashboardDiv id = "dashboard">            
             {monthlies.length > 0 ? <MonthliesContainer >
