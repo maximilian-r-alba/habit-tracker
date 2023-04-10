@@ -9,7 +9,7 @@ function UserForm ({user , setUser, handleUserChange}){
     const navigate = useNavigate()
 
     useEffect(()=>{
-      if (user){setNewUserParams({...newUserParams, ['username']:user.username, ['name']: user.name, ['bio']: user.bio, ['image_url']: user.image_url})}
+      if (user){setNewUserParams({...newUserParams, 'username':user.username, 'name': user.name, 'bio': user.bio, 'image_url': user.image_url})}
     }, [])
   
     function handleChange(e){
