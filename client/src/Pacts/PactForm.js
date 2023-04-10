@@ -10,7 +10,6 @@ function PactForm({resolution , handlePacts, setShowPactForm , pact}){
 
     useEffect(() => {
         if(pact){
-            console.log('pact was preset')
             setPactParams({frequency_scope: pact.frequency_scope, goal_int: pact.goal_int, isSpecific: pact.isSpecific, resolution_id: pact.resolution.id})
         }
     }, [pact])
@@ -19,7 +18,7 @@ function PactForm({resolution , handlePacts, setShowPactForm , pact}){
     function handleSubmit(e){
         e.preventDefault()
         if(pact){
-            console.log('patch')
+          
             fetch(`/pacts/${pact.id}`, {
                 method: "PATCH",
                 headers: {"Content-Type" : "application/json"},
@@ -29,7 +28,6 @@ function PactForm({resolution , handlePacts, setShowPactForm , pact}){
                         setShowPactForm(false)
                     }
                     else{
-                        handlePacts(undefined)
                         r.json().then(setErrorData)
                     }
                 })
@@ -47,6 +45,9 @@ function PactForm({resolution , handlePacts, setShowPactForm , pact}){
             if(r.ok){
                 r.json().then(pact => handlePacts(pact))
                 setShowPactForm(false)
+            }
+            else{
+                r.json().then(setErrorData)
             }
         })
     }
@@ -81,8 +82,7 @@ function PactForm({resolution , handlePacts, setShowPactForm , pact}){
     return (
  <>
  
- { errorData ? <ErrorsStyled>Uh-oh:<p>{errorData.error}</p>
- </ErrorsStyled> : <></>}
+ { errorData ? <ErrorsStyled>Uh-oh:{errorData.errors.map((error) => <p>{error}</p>)} </ErrorsStyled> : <></>}
 
 
         <StyledPactForm onSubmit={handleSubmit}>
