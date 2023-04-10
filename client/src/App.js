@@ -17,7 +17,6 @@ import UserPage from './Users/UserPage';
 
 function App() {
   
-  // console.log('app rendered')
   const [user, setUser] = useState()
   const [users, setUsers] = useState()
   const [resolutions, setResolutions] = useState([])
@@ -35,6 +34,21 @@ function App() {
     })
   }, [])
 
+  useEffect(() => {
+    const newResolutions = resolutions.map((res) => {
+      const newUniqueUsers = []
+      newUniqueUsers.push(users.filter((user) =>{
+         return user.pacts.find((pact) =>{
+          return pact.resolution.id === res.id
+        })}).map((user) => {
+          return {id: user.id, name: user.name}
+        }))
+      return {...res, 'unique_users': [...newUniqueUsers].pop()}
+    })
+    setResolutions(newResolutions)
+    
+  }, [users])
+  
   function handleResolutions (newResolution){
     setResolutions([newResolution, ...resolutions ])
   }
@@ -48,7 +62,6 @@ function App() {
   }
    
   function handlePacts(newPact , method){
-
     const userPacts = user.pacts.filter((pact) => pact.id != newPact.id)
 
     const resolutionsFromPacts = userPacts.map((p)=> p.resolution)
@@ -64,28 +77,12 @@ function App() {
       return resolutionsFromPacts.find( r=> r.id === id) 
     })
    
-    setUser({...user, 'pacts':userPacts, 'resolutions':userResolutions})
+      setUser({...user, 'pacts':userPacts, 'resolutions':userResolutions})
     
-    setUsers([{...user, 'pacts':userPacts, 'resolutions':userResolutions}, ...uneditedUsers ])
+      setUsers([{...user, 'pacts':userPacts, 'resolutions':userResolutions}, ...uneditedUsers ])
 
-    const editedResolution = resolutions.filter(res => res.id == newPact.resolution.id).pop()
-
-    const uneditedResolutions = resolutions.filter(res=> res.id !== newPact.resolution.id)
-
-    const userList = editedResolution.unique_users.filter( u => u.id !== user.id)
-
-    const userResolutionsIDs = userResolutions.map((r) => r.id)
-
-    if(method !== "DELETE" || userResolutionsIDs.includes(editedResolution.id)){
-      userList.push({id: user.id, name: user.name})
-    }
-
-    const newResolutionsObj = [{...editedResolution, 'unique_users':userList} , ...uneditedResolutions]
-    
-    setResolutions(newResolutionsObj)
-   
   }
-
+ 
   return (
     <>
     
@@ -112,13 +109,3 @@ function App() {
 }
 
 export default App;
-
-// const OverlayDiv = styled.div`
-
-// display: ${props => props.active? 'none' : ''};
-// `
-
-// const PortalSite = styled.div`
-//   display: ${props => props.active? '': 'none'};
-//   background: red;
-// `
