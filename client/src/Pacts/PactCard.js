@@ -5,12 +5,12 @@ import { useContext } from "react"
 import styled from "styled-components"
 import ProgressCircle from "./ProgressCircle"
 import ProgressSquare from "./ProgressSquare"
-import {MdAddTask, MdOutlinePermDeviceInformation} from "react-icons/md"
+import {MdAddTask} from "react-icons/md"
 import {AiOutlineEdit} from "react-icons/ai"
 import {TiDocumentDelete} from "react-icons/ti"
 
 
-function PactCard({pact , handlePacts , handlePactForm , deletePact}){
+function PactCard({pact , handlePacts , handlePactForm }){
 
 
     const currentUser = useContext(UserContext)
