@@ -5,11 +5,11 @@ import styled from "styled-components"
 import {FcComboChart} from "react-icons/fc"
 
 function NavBar({setUser}){
-  // console.log('nav rendered')
+  console.log('nav rendered')
     const user = useContext(UserContext)
     const navigate = useNavigate()
 
-    function handleLogout(e){
+    function handleLogout(){
         fetch("/logout", {
           method: "DELETE"}).then(() => {
               navigate('/') 
