@@ -24,15 +24,20 @@ function PactCard({pact , handlePacts , handlePactForm , deletePact}){
  
     const goal = pactInstance.goal_int
   
-    const today = new Date(new Date("4/5/23").setHours(23,59,59,59))
+    const today = new Date(new Date().setHours(23,59,59,59))
+    const weekStart = new Date((new Date( new Date(today.valueOf()).setDate(today.getDate() - today.getDay()))).setHours(0,0,0,0))
+    const weekEnd = new Date( new Date(today.valueOf()).setDate(today.getDate() - today.getDay()+6))
+
     const yesterday = new Date( new Date(today.valueOf()).setDate(today.getDate() -1))
     const tomorrow = new Date( new Date(today.valueOf()).setDate(today.getDate() +1))
-    const weekStart = new Date( new Date(today.valueOf()).setDate(today.getDate() - today.getDay()))
-    const weekEnd = new Date( new Date(today.valueOf()).setDate(today.getDate() - today.getDay()+6))
     
-    const weekArray = generateWeek(weekStart, weekEnd).map((day) => <ProgressSquare key={day.toString().slice(0,3)} progressDates={instanceDates} day={day} weekStart={weekStart} weekEnd={weekEnd}/>)
+
+    
+    const weekArray = generateWeek(weekStart, weekEnd).map((day) =>
+    <ProgressSquare key={day.toString().slice(0,3)} progressDates={instanceDates} day={day} weekStart={weekStart} weekEnd={weekEnd}/>)
    
     function generateWeek(startDate, stopDate) {
+     
         const dateArray = new Array();
         let currentDate = startDate;
         while (currentDate <= stopDate) {
@@ -66,7 +71,8 @@ function PactCard({pact , handlePacts , handlePactForm , deletePact}){
                                     return dateObj.getYear() == today.getYear() && dateObj.getMonth() == today.getMonth()})
                     case "Weekly":
                         return pactInstance['progress_dates'].filter((obj) => {
-                            return Date.parse(weekStart) <= Date.parse(obj.progressDate) &&  Date.parse(obj.progressDate) <= Date.parse(weekEnd)})
+                    
+                            return Date.parse(new Date((new Date( new Date(today.valueOf()).setDate(today.getDate() - today.getDay()))).setHours(0,0,0,0))) <= Date.parse(obj.progressDate) &&  Date.parse(obj.progressDate) <= Date.parse(weekEnd)})
 
                     case "Daily":
                         return pactInstance['progress_dates'].filter((obj) => {
@@ -76,11 +82,9 @@ function PactCard({pact , handlePacts , handlePactForm , deletePact}){
                 }
 
             }
-            
             setInstanceDates(filterOldProgress(pactInstance['frequency_scope']))
        
     }, [pactInstance])
-
 
 
     function handlePactProgress(){
