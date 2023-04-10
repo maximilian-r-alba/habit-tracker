@@ -2,9 +2,9 @@ import styled from "styled-components"
 import { NavLink } from "react-router-dom"
 import { UserContext } from "../UserContext"
 import { useContext } from "react"
-import { useEffect } from "react"
+
 function LandingPage(){
-    // console.log('landing page rendered')
+    console.log('landing page rendered')
     const user = useContext(UserContext)
     
     return <StyledLanding>
@@ -23,7 +23,7 @@ function LandingPage(){
 export default LandingPage
 
 const StyledLanding = styled.div`
-height: 91vh;
+height: 95vh;
 border-radius: 20px;
 display: flex;
 background-image: url("https://cdn.pixabay.com/photo/2018/05/02/14/57/arrows-3368751_960_720.png");
@@ -35,4 +35,8 @@ justify-content: center;
 align-items: center;
 text-align: center;
 font-size: 30px;
+
+a{
+    color: inherit;
+}
 `
