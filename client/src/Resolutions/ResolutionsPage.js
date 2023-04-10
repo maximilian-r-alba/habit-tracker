@@ -1,14 +1,15 @@
 import { useState } from "react"
-import ResolutionCard from "./ResolutionCard"
-import ResolutionForm from "./ResolutionForm"
-import PactForm from "../Pacts/PactForm"
-// import {createPortal} from 'react-dom'
 import styled from "styled-components"
+
 import { useContext } from "react"
 import { UserContext } from "../UserContext"
 
+import ResolutionCard from "./ResolutionCard"
+import ResolutionForm from "./ResolutionForm"
+import PactForm from "../Pacts/PactForm"
+
 function ResolutionsPage ({resolutions , handleResolutions , handlePacts}){
-    // console.log('resolution page rendered')
+    console.log('resolution page rendered')
   
     const user = useContext(UserContext)
     const [resolutionView, setResolutionView] = useState(false)
@@ -43,9 +44,10 @@ function ResolutionsPage ({resolutions , handleResolutions , handlePacts}){
 
 const CardContainer = styled.div`
 display: grid;
-grid-template-columns: 25vw 25vw 25vw 25vw ;
-grid-template-rows: 25vh;
+grid-template-columns: 24vw 24vw 24vw 24vw ;
+grid-template-rows: 24vh;
 grid-auto-rows: 25vh;
+grid-row-gap: 10px;
 `
 
 const AddResolutionButton = styled.button`
