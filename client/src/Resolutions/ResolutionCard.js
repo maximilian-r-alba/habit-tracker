@@ -1,12 +1,14 @@
 import styled from "styled-components"
+import { useContext } from "react";
+import { UserContext } from "../UserContext"
 import { BsFillPersonFill } from 'react-icons/bs';
 import {IoIosAddCircleOutline} from "react-icons/io"
 import { useEffect, useState } from "react";
 
 function ResolutionCard ({resolution , handlePactForm , pactView}){
 
-    console.log('resolution card rendered')
     const [userAmount, setUserAmount] = useState()
+    const user = useContext(UserContext)
 
     useEffect(() =>
     {
@@ -24,7 +26,7 @@ function ResolutionCard ({resolution , handlePactForm , pactView}){
             {userAmount ? <p >{userAmount} <BsFillPersonFill /></p> : <></>}
         </span>
         <h1>{resolution.goal_statement}</h1>
-        <button disabled={pactView} onClick={() => handlePactForm(resolution)}><IoIosAddCircleOutline className="addBtn" /></button>
+       { user ? <button disabled={pactView} onClick={() => handlePactForm(resolution)}><IoIosAddCircleOutline className="addBtn" /></button> : <></>}
         
     </Card>
 )
