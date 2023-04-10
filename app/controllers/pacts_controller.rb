@@ -1,6 +1,5 @@
 class PactsController < ApplicationController
     def create
-
         pact = @current_user.pacts.create!(pact_params)
         render json: pact, status: :created
     end
@@ -18,10 +17,12 @@ class PactsController < ApplicationController
     end
 
     def destroy
-        byebug
-        pact = User.find(session[:user_id]).pacts.find(params[:id])
-        pact.destroy
-        head :no_content
+        pact = Pact.find(params[:id])
+        if pact.user[:id] == session[:user_id]
+            pact.destroy
+            head :no_content
+        end
+        
     end
     private
 
