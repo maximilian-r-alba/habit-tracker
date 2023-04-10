@@ -65,7 +65,7 @@ width: 20vw;
 .submitBtn{
     border: none;
     background: none;
-    font-size: 20px;
+    font-size: 1em;
     text-decoration: underline;
     padding-bottom: 20px;
     cursor: pointer;
