@@ -55,7 +55,7 @@ function App() {
 
   function handleUserChange (userObj){
     const filteredUsers = users.filter((u) => u.id !== userObj.id)
-    if (userObj.name){
+    if (userObj){
       return setUsers([userObj, ...filteredUsers])
     }
     return setUsers([...filteredUsers])
