@@ -126,7 +126,7 @@ function PactCard({pact , handlePacts , handlePactForm }){
       {!pactInstance['completion_date'] || Date.parse(yesterday) < Date.parse(pactInstance['completion_date']) && Date.parse(pactInstance['completion_date']) < Date.parse(tomorrow) ?  
       
       <StyledMilestone category={pactInstance.frequency_scope} className={`${pactInstance.frequency_scope}`}>
-            <p className="category">{pact.resolution.category} { (currentUser.id === pactInstance.user_id ) && (handlePactForm) ?  <span><AiOutlineEdit onClick={() => handlePactForm(pactInstance.resolution , pactInstance)}/> <TiDocumentDelete onClick={handleDeletePact} /> </span> : <></>} </p>
+            <p className="category">{pact.resolution.category} { (currentUser.id === pactInstance.user_id ) && handlePactForm ?  <span><AiOutlineEdit onClick={() => handlePactForm(pactInstance.resolution , pactInstance)}/> <TiDocumentDelete onClick={handleDeletePact} /> </span> : <></>} </p>
             <h2>{pact.resolution.goal_statement}</h2>
             
             {pactInstance.frequency_scope == "Weekly" ?  
