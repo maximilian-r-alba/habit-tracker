@@ -55,10 +55,10 @@ function App() {
 
   function handleUserChange (userObj){
     const filteredUsers = users.filter((u) => u.id !== userObj.id)
-    if (userObj){
+    
       return setUsers([userObj, ...filteredUsers])
-    }
-    return setUsers([...filteredUsers])
+   
+  
   }
    
   function handlePacts(newPact , method){
