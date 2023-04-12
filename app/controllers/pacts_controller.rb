@@ -27,11 +27,6 @@ class PactsController < ApplicationController
     private
 
     def pact_params
-        
-        if(params[:isSpecific])
-            return params.permit(:resolution_id, :goal_int, :isSpecific)
-        else
-            return params.permit(:isSpecific, :resolution_id, :frequency_scope, :goal_int)
-        end
+            return params.permit(:isSpecific, :resolution_id, :frequency_scope, :goal_int, :isSpecific)
     end
 end

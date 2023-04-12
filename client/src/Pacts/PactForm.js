@@ -14,6 +14,7 @@ function PactForm({resolution , handlePacts, setShowPactForm , pact}){
         }
     }, [pact])
 
+   
     
     function handleSubmit(e){
         e.preventDefault()
@@ -64,7 +65,8 @@ function PactForm({resolution , handlePacts, setShowPactForm , pact}){
                 break;
 
             case 'isSpecific':
-                if(value==='true'){
+                if(value==='true' || value === true){
+                    
                     setPactParams({...pactParams, [key]: true, 'frequency_scope' : false})
                 }
                 else{
